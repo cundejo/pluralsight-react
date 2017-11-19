@@ -11,7 +11,7 @@ const Card = (props) => {
       </div>
     </div>
   );
-}
+};
 
 const CardList = (props) => {
   return (
@@ -19,10 +19,10 @@ const CardList = (props) => {
       {props.cards.map(card => <Card key={card.id}  {...card} />)}
     </div>
   );
-}
+};
 
 class Form extends React.Component {
-  state = { userName: '' }
+  state = { userName: '' };
 
   handleSubmit = (event) => {
     event.preventDefault();
