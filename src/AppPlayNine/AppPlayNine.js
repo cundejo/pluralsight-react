@@ -21,7 +21,8 @@ const Button = (props) => {
 
   switch (props.answerIsCorrect) {
     case true:
-      button = <button className="btn btn-lg btn-success">
+      button = <button className="btn btn-lg btn-success"
+                       onClick={props.acceptAnswer}>
         <i className="fa fa-check"/>
       </button>;
       break;
@@ -78,11 +79,11 @@ class Numbers extends React.Component {
   }
 
   numberClass(number) {
-    if (this.props.selectedNumbers.includes(number)) {
-      return "selected";
-    }
     if (this.props.usedNumbers.includes(number)) {
       return "used";
+    }
+    if (this.props.selectedNumbers.includes(number)) {
+      return "selected";
     }
   };
 
@@ -114,14 +115,15 @@ class Game extends React.Component {
   constructor() {
     super();
     this.state = {
-      selectedNumbers: [],
+      selectedNumbers: [],    // The actual numbers shosen
       numberOfStars: 1 + Math.floor(Math.random() * 9),
       answerIsCorrect: null,
-      usedNumbers: [4, 7],
+      usedNumbers: [],        // The numbers already used in the game.
     };
     this.selectNumber = this.selectNumber.bind(this);
     this.unselectNumber = this.unselectNumber.bind(this);
     this.checkAnswer = this.checkAnswer.bind(this);
+    this.acceptAnswer = this.acceptAnswer.bind(this);
   }
 
   selectNumber(clickedNumber) {
@@ -152,6 +154,15 @@ class Game extends React.Component {
     }));
   }
 
+  acceptAnswer() {
+    this.setState(prevState => ({
+      usedNumbers: prevState.usedNumbers.concat(prevState.selectedNumbers),
+      selectedNumbers: [],
+      answerIsCorrect: null,
+      numberOfStars: 1 + Math.floor(Math.random() * 9)
+    }));
+  }
+
   render() {
     console.log("Actual state ", this.state.selectedNumbers);
 
@@ -168,7 +179,8 @@ class Game extends React.Component {
 
           <Button selectedNumbers={selectedNumbers}
                   checkAnswer={this.checkAnswer}
-                  answerIsCorrect={answerIsCorrect}/>
+                  answerIsCorrect={answerIsCorrect}
+                  acceptAnswer={this.acceptAnswer}/>
 
           <Answer selectedNumbers={selectedNumbers}
                   unselectNumber={this.unselectNumber}/>
