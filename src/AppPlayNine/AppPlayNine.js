@@ -2,6 +2,8 @@ import React from 'react';
 import _ from 'lodash';
 import './styles.css';
 
+// todo: video 25
+
 const Stars = (props) => {
 
   // const numberOfStars = 1 + Math.floor(Math.random() * 9);
